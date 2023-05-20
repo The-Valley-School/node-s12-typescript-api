@@ -1,7 +1,7 @@
 import mongoose, { type ObjectId } from "mongoose";
 const Schema = mongoose.Schema;
 
-interface ICar {
+export interface ICar {
   brand: ObjectId;
   model: string;
   plate: string;

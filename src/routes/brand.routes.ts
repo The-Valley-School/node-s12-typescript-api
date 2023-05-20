@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type NextFunction, type Response, type Request } from "express";
 import fs from "fs";
 import multer from "multer";
 
@@ -9,7 +9,7 @@ const upload = multer({ dest: "public" });
 export const brandRouter = express.Router();
 
 // CRUD: READ
-brandRouter.get("/", async (req, res, next) => {
+brandRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Asi leemos query params
     const page = req.query.page ? parseInt(req.query.page as string) : 1;
@@ -35,7 +35,7 @@ brandRouter.get("/", async (req, res, next) => {
 });
 
 // CRUD: READ
-brandRouter.get("/:id", async (req, res, next) => {
+brandRouter.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const brand = await Brand.findById(id);
@@ -50,7 +50,7 @@ brandRouter.get("/:id", async (req, res, next) => {
 });
 
 // CRUD: Operación custom, no es CRUD
-brandRouter.get("/name/:name", async (req, res, next) => {
+brandRouter.get("/name/:name", async (req: Request, res: Response, next: NextFunction) => {
   const brandName = req.params.name;
 
   try {
@@ -66,7 +66,7 @@ brandRouter.get("/name/:name", async (req, res, next) => {
 });
 
 // CRUD: CREATE
-brandRouter.post("/", async (req, res, next) => {
+brandRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const brand = new Brand(req.body);
     const createdBrand = await brand.save();
@@ -77,7 +77,7 @@ brandRouter.post("/", async (req, res, next) => {
 });
 
 // CRUD: DELETE
-brandRouter.delete("/:id", async (req, res, next) => {
+brandRouter.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const brandDeleted = await Brand.findByIdAndDelete(id);
@@ -92,7 +92,7 @@ brandRouter.delete("/:id", async (req, res, next) => {
 });
 
 // CRUD: UPDATE
-brandRouter.put("/:id", async (req, res, next) => {
+brandRouter.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const brandUpdated = await Brand.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
@@ -106,7 +106,7 @@ brandRouter.put("/:id", async (req, res, next) => {
   }
 });
 
-brandRouter.post("/logo-upload", upload.single("logo"), async (req, res, next) => {
+brandRouter.post("/logo-upload", upload.single("logo"), async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Renombrado de la imagen
     const originalname = req.file?.originalname as string;

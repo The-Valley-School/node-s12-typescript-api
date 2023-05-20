@@ -1,7 +1,7 @@
 import { userRouter } from "./routes/user.routes.js";
 import { carRouter } from "./routes/car.routes.js";
 import { brandRouter } from "./routes/brand.routes.js";
-// const { fileUploadRouter } = require("./routes/file-upload.routes.js");
+
 import {
   type Request,
   type Response,
@@ -49,7 +49,6 @@ const main = async (): Promise<void> => {
   app.use("/car", carRouter);
   app.use("/brand", brandRouter);
   app.use("/public", express.static("public"));
-  // app.use("/file-upload", fileUploadRouter);
   app.use("/", router);
 
   // Middleware de gestión de errores

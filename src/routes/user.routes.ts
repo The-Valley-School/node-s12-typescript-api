@@ -1,10 +1,12 @@
-import express from "express";
+import express, { type NextFunction, type Response, type Request } from "express";
 import bcrypt from "bcrypt";
 // import { generateToken } from "../utils/token";
 
 // Modelos
 import { User } from "../models/User.js";
 import { Car } from "../models/Car.js";
+import { generateToken } from "../utils/token.js";
+import { isAuth } from "../middlewares/auth.middleware.js";
 // import { isAuth } from "../middlewares/auth.middleware.js";
 
 // Router propio de usuarios
@@ -12,7 +14,7 @@ export const userRouter = express.Router();
 
 // CRUD: READ
 // EJEMPLO DE REQ: http://localhost:3000/user?page=1&limit=10
-userRouter.get("/", async (req, res, next) => {
+userRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Ternario que se queda con el parametro si llega
     const page = req.query.page ? parseInt(req.query.page as string) : 1;
@@ -39,7 +41,7 @@ userRouter.get("/", async (req, res, next) => {
 });
 
 // CRUD: READ
-userRouter.get("/:id", async (req, res, next) => {
+userRouter.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const user = await User.findById(id).select("+password");
@@ -62,7 +64,7 @@ userRouter.get("/:id", async (req, res, next) => {
 });
 
 // CRUD: Operación custom, no es CRUD
-userRouter.get("/name/:name", async (req, res, next) => {
+userRouter.get("/name/:name", async (req: Request, res: Response, next: NextFunction) => {
   const name = req.params.name;
 
   try {
@@ -79,7 +81,7 @@ userRouter.get("/name/:name", async (req, res, next) => {
 
 // Endpoint de creación de usuarios
 // CRUD: CREATE
-userRouter.post("/", async (req, res, next) => {
+userRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = new User(req.body);
     const createdUser = await user.save();
@@ -91,7 +93,7 @@ userRouter.post("/", async (req, res, next) => {
 
 // Para elimnar usuarios
 // CRUD: DELETE
-userRouter.delete("/:id", isAuth, async (req, res, next) => {
+userRouter.delete("/:id", isAuth, async (req: any, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
 
@@ -111,7 +113,7 @@ userRouter.delete("/:id", isAuth, async (req, res, next) => {
 });
 
 // CRUD: UPDATE
-userRouter.put("/:id", isAuth, async (req, res, next) => {
+userRouter.put("/:id", isAuth, async (req: any, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
 
@@ -124,7 +126,7 @@ userRouter.put("/:id", isAuth, async (req, res, next) => {
       Object.assign(userToUpdate, req.body);
       await userToUpdate.save();
       // Quitamos pass de la respuesta
-      const userToSend = userToUpdate.toObject();
+      const userToSend: any = userToUpdate.toObject();
       delete userToSend.password;
       res.json(userToSend);
     } else {
@@ -136,7 +138,7 @@ userRouter.put("/:id", isAuth, async (req, res, next) => {
 });
 
 // LOGIN DE USUARIOS
-userRouter.post("/login", async (req, res, next) => {
+userRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
   try {
     // const email = req.body.email;
     // const password = req.body.password;
@@ -157,11 +159,11 @@ userRouter.post("/login", async (req, res, next) => {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       // Quitamos password de la respuesta
-      const userWithoutPass = user.toObject();
+      const userWithoutPass: any = user.toObject();
       delete userWithoutPass.password;
 
       // Generamos token JWT
-      const jwtToken = generateToken(user._id, user.email);
+      const jwtToken = generateToken(user._id.toString(), user.email);
 
       return res.status(200).json({ token: jwtToken });
     } else {

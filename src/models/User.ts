@@ -1,10 +1,25 @@
+import { type ICar } from "./Car";
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
 const Schema = mongoose.Schema;
 
+export interface IUser {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  address: {
+    street: string;
+    number: number;
+    city: string;
+  };
+  cars?: ICar[];
+}
+
 // Creamos el schema del usuario
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
   {
     email: {
       type: String,
@@ -82,4 +97,4 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model<IUser>("User", userSchema);

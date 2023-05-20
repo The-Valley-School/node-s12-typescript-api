@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type NextFunction, type Response, type Request } from "express";
 
 // Modelos
 import { Car } from "../models/Car.js";
@@ -7,7 +7,7 @@ import { Car } from "../models/Car.js";
 export const carRouter = express.Router();
 
 // CRUD: READ
-carRouter.get("/", (req, res, next) => {
+carRouter.get("/", (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log("Estamos en el middleware /car que comprueba parámetros");
 
@@ -28,7 +28,7 @@ carRouter.get("/", (req, res, next) => {
   }
 });
 
-carRouter.get("/", async (req, res, next) => {
+carRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Asi leemos query params
     const page: number = req.query.page as any;
@@ -56,7 +56,7 @@ carRouter.get("/", async (req, res, next) => {
 });
 
 // CRUD: READ
-carRouter.get("/:id", async (req, res, next) => {
+carRouter.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const car = await Car.findById(id).populate(["owner", "brand"]);
@@ -71,7 +71,7 @@ carRouter.get("/:id", async (req, res, next) => {
 });
 
 // CRUD: Operación custom, no es CRUD
-carRouter.get("/brand/:brand", async (req, res, next) => {
+carRouter.get("/brand/:brand", async (req: Request, res: Response, next: NextFunction) => {
   const brand = req.params.brand;
 
   try {
@@ -88,7 +88,7 @@ carRouter.get("/brand/:brand", async (req, res, next) => {
 
 // Endpoint de creación de usuarios
 // CRUD: CREATE
-carRouter.post("/", async (req, res, next) => {
+carRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const car = new Car(req.body);
     const createdCar = await car.save();
@@ -100,7 +100,7 @@ carRouter.post("/", async (req, res, next) => {
 
 // Para elimnar coches
 // CRUD: DELETE
-carRouter.delete("/:id", async (req, res, next) => {
+carRouter.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const carDeleted = await Car.findByIdAndDelete(id);
@@ -115,7 +115,7 @@ carRouter.delete("/:id", async (req, res, next) => {
 });
 
 // CRUD: UPDATE
-carRouter.put("/:id", async (req, res, next) => {
+carRouter.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id;
     const carUpdated = await Car.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
