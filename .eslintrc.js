@@ -21,5 +21,6 @@ module.exports = {
     "@typescript-eslint/quotes": [2, "double"],
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/comma-dangle": "off",
   },
 };
