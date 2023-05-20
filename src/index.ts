@@ -1,6 +1,6 @@
-// const { userRouter } = require("./routes/user.routes.js");
-// const { carRouter } = require("./routes/car.routes.js");
-// const { brandRouter } = require("./routes/brand.routes.js");
+import { userRouter } from "./routes/user.routes.js";
+import { carRouter } from "./routes/car.routes.js";
+import { brandRouter } from "./routes/brand.routes.js";
 // const { fileUploadRouter } = require("./routes/file-upload.routes.js");
 import {
   type Request,
@@ -45,9 +45,9 @@ const main = async (): Promise<void> => {
   });
 
   // Usamos las rutas
-  // app.use("/user", userRouter);
-  // app.use("/car", carRouter);
-  // app.use("/brand", brandRouter);
+  app.use("/user", userRouter);
+  app.use("/car", carRouter);
+  app.use("/brand", brandRouter);
   app.use("/public", express.static("public"));
   // app.use("/file-upload", fileUploadRouter);
   app.use("/", router);
