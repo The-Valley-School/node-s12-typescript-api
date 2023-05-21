@@ -3,11 +3,11 @@ import bcrypt from "bcrypt";
 // import { generateToken } from "../utils/token";
 
 // Modelos
-import { User } from "../models/User.js";
-import { Car } from "../models/Car.js";
-import { generateToken } from "../utils/token.js";
-import { isAuth } from "../middlewares/auth.middleware.js";
-// import { isAuth } from "../middlewares/auth.middleware.js";
+import { User } from "../models/User";
+import { Car } from "../models/Car";
+import { generateToken } from "../utils/token";
+import { isAuth } from "../middlewares/auth.middleware";
+// import { isAuth } from "../middlewares/auth.middleware";
 
 // Router propio de usuarios
 export const userRouter = express.Router();

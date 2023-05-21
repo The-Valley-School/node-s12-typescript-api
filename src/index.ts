@@ -1,6 +1,6 @@
-import { userRouter } from "./routes/user.routes.js";
-import { carRouter } from "./routes/car.routes.js";
-import { brandRouter } from "./routes/brand.routes.js";
+import { userRouter } from "./routes/user.routes";
+import { carRouter } from "./routes/car.routes";
+import { brandRouter } from "./routes/brand.routes";
 
 import {
   type Request,
@@ -31,7 +31,7 @@ const main = async (): Promise<void> => {
   // Rutas
   const router = express.Router();
   router.get("/", (req: Request, res: Response) => {
-    res.send(`Esta es la home de nuestra API. Estamos utilizando la BBDD de ${database?.connection?.name as string} `);
+    res.send(`Esta es la RAIZ de nuestra API. Estamos utilizando la BBDD de ${database?.connection?.name as string} `);
   });
   router.get("*", (req: Request, res: Response) => {
     res.status(404).send("Lo sentimos :( No hemos encontrado la página solicitada.");
