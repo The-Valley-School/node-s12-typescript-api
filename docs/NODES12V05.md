@@ -17,4 +17,4 @@ Y debemos crear un comando en el package.json para ejecutarla en desarrollo (sta
 
 Recuerda que puedes encontrar en este repositorio todo el código que hemos visto durante la sesión:
 
-<https://github.com/The-Valley-School/node-s12-typescript-api/settings>
+<https://github.com/The-Valley-School/node-s12-typescript-api>
