@@ -12,4 +12,4 @@ Una vez realizada la migración recuerda comprobar que todo sigue funcionando co
 
 Recuerda que puedes encontrar en este repositorio todo el código que hemos visto durante la sesión:
 
-<https://github.com/The-Valley-School/node-s12-typescript-api/settings>
+<https://github.com/The-Valley-School/node-s12-typescript-api>
